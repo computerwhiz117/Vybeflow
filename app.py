@@ -161,3 +161,86 @@ if __name__ == '__main__':
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            background: linear-gradient(120deg, #000, #333);
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: rgba(255,255,255,0.95);
+            padding: 2em 2.5em;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            max-width: 350px;
+            margin: 80px auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5em;
+            color: #222;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 0.5em;
+            margin: 0.5em 0 1em 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 0.7em;
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: #444;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 1em;
+        }
+        h1, label, .signup-link, ul, li {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Page</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="username">Username:</label>
+            {{ form.username(id="username") }}
+            <label for="password">Password:</label>
+            {{ form.password(id="password") }}
+            {{ form.submit() }}
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
