@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <a class="navbar-brand" href="#">Vybeflow</a>
+    <form class="form-inline ml-auto">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <img src="https://via.placeholder.com/80" class="rounded-circle mb-2" alt="Profile">
+                    <h5 class="card-title">Your Name</h5>
+                    <p class="card-text">Bio or status here</p>
+                    <button class="btn btn-outline-primary btn-sm">Edit Profile</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">What's on your mind?</h5>
+                    <textarea class="form-control mb-2" rows="2" placeholder="Share something..."></textarea>
+                    <button class="btn btn-primary">Post</button>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="https://via.placeholder.com/40" class="rounded-circle mr-2" alt="User">
+                        <strong>User Name</strong>
+                    </div>
+                    <p>This is a sample post, like Facebook's feed.</p>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary">Like</button>
+                        <button class="btn btn-sm btn-outline-secondary">Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Friends</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/30" class="rounded-circle mr-2" alt="Friend 1">
+                            Friend 1
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/30" class="rounded-circle mr-2" alt="Friend 2">
+                            Friend 2
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

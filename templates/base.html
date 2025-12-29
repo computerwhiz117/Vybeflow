@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <!-- Font Awesome -->
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -17,9 +18,19 @@
   rel="stylesheet"
 />
 <body class="bg-light">
-    <<!-- MDB -->
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.1.0/mdb.umd.min.js"
-></script>
-</body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Vybe Flow</title>
+        <!-- Bundle CSS and custom styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='bundle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <script src="{{ url_for('static', filename='bundle.js') }}"></script>
+    </body>
+    </html>
+    <script src="{{ url_for('static', filename='bundle.js') }}"></script>

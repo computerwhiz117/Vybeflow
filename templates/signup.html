@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - Vybe Flow</title>
+    <style>
+        body {
+            background: url('/static/uploads/vybe_photo.jpg') center center no-repeat fixed;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 0;
+        }
+        .signup-container {
+            position: relative;
+            z-index: 1;
+            background: rgba(30,30,30,0.97);
+            padding: 2em 2.5em;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            max-width: 400px;
+            margin: 80px auto;
+        }
+        .page-title {
+            text-align: center;
+            color: #fff;
+            margin-top: 40px;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px #000;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5em;
+            color: #fff;
+        }
+        label {
+            font-weight: bold;
+            color: #fff;
+        }
+        input[type="text"], input[type="password"], input[type="tel"], input[type="email"] {
+            width: 100%;
+            padding: 0.5em;
+            margin: 0.5em 0 1em 0;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: #222;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 0.7em;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: #333;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 1em;
+            color: #fff;
+        }
+        .login-link a {
+            color: #6dd5ed;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            color: #ff6b6b;
+            list-style: none;
+            padding: 0;
+            margin-top: 1em;
+        }
+        li {
+            color: #ff6b6b;
+            padding: 0.3em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Welcome to Vybe Flow</h1>
+    <div class="signup-container">
+        <h1>Sign Up</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="first_name">First Name:</label>
+            {{ form.first_name(id="first_name") }}
+            <label for="last_name">Last Name:</label>
+            {{ form.last_name(id="last_name") }}
+            <label for="username">Username:</label>
+            {{ form.username(id="username") }}
+            <label for="email">Email Address:</label>
+            {{ form.email(id="email") }}
+            <label for="phone">Phone Number:</label>
+            {{ form.phone(id="phone") }}
+            <label for="password">Password:</label>
+            {{ form.password(id="password") }}
+            <label for="confirm">Confirm Password:</label>
+            {{ form.confirm(id="confirm") }}
+            {{ form.submit() }}
+        </form>
+        <div class="login-link">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+body {
+    background: #f0f2f5;
+}
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.navbar {
+    border-radius: 0 0 8px 8px;
+}
+.rounded-circle {
+    border: 2px solid #1877f2;
+}
+.btn-primary {
+    background: #1877f2;
+    border: none;
+}
