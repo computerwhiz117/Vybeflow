@@ -15,3 +15,26 @@ body {
     background: #1877f2;
     border: none;
 }
+
+/* Homepage tweaks for feed layout */
+.profile-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.media img {
+    width: 36px;
+}
+.sticky-top {
+    position: sticky;
+}
+.navbar-brand {
+    color: #1877f2 !important;
+    font-size: 1.25rem;
+}
+.input-group .form-control {
+    border-radius: 20px 0 0 20px;
+}
+.input-group .btn {
+    border-radius: 0 20px 20px 0;
+}
