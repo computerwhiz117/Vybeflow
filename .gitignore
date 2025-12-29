@@ -1,0 +1,29 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+
+# Virtualenvs
+env/
+venv/
+
+# Local env files
+.env
+.flaskenv
+
+# SQLite / DB files
+*.db
+instance/*.db
+*.sqlite3
+
+# Static uploads and build outputs
+static/uploads/
+dist/
+build/
+
+# Python egg info
+*.egg-info/
+
+# Editor temporary files
+*.swp
+*.swo
+.vscode/
