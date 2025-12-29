@@ -1,16 +1,31 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField, StringField, PasswordField, SelectField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, Email
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from notifications import mail, send_signup_notifications
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vybeflow.db'
+
+# Email configuration
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'true').lower() == 'true'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'noreply@vybeflow.com')
+
 db = SQLAlchemy(app)
+mail.init_app(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -18,12 +33,16 @@ login_manager.login_view = 'login'
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
+    first_name = db.Column(db.String(150), nullable=True)
+    last_name = db.Column(db.String(150), nullable=True)
     phone = db.Column(db.String(20), nullable=True)
-    theme = db.Column(db.String(50), nullable=True, default='default')  # Add this line
+    password_hash = db.Column(db.String(128), nullable=False)
+    theme = db.Column(db.String(50), nullable=True, default='default')
+    email = db.Column(db.String(150), unique=True, nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -33,7 +52,9 @@ def load_user(user_id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    author = db.relationship('User', backref='posts')
 
 class PostForm(FlaskForm):
     content = TextAreaField('What\'s on your mind?', validators=[DataRequired()])
@@ -45,8 +66,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class SignupForm(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired(), Length(min=1, max=150)])
+    last_name = StringField('Last Name', validators=[DataRequired(), Length(min=1, max=150)])
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=150)])
-    phone = StringField('Phone Number', validators=[Length(min=0, max=20)])  # Added phone field
+    email = StringField('Email Address', validators=[DataRequired(), Email(), Length(max=150)])
+    phone = StringField('Phone Number', validators=[Length(min=0, max=20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
@@ -64,15 +88,36 @@ class ProfileForm(FlaskForm):
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        existing_user = User.query.filter_by(username=form.username.data).first()
+        existing_user = User.query.filter(
+            (User.username == form.username.data) | (User.email == form.email.data)
+        ).first()
         if existing_user:
-            flash('Username already exists.')
+            flash('Username or email already exists.')
             return redirect(url_for('signup'))
-        user = User(username=form.username.data, phone=form.phone.data)  # Save phone
+        user = User(
+            username=form.username.data,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            phone=form.phone.data
+        )
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Account created! Please log in.')
+        
+        # Send email and SMS notifications
+        notification_results = send_signup_notifications(
+            email=form.email.data,
+            phone=form.phone.data,
+            username=form.username.data
+        )
+        
+        # Provide feedback based on notification results
+        if notification_results['email']:
+            flash('Account created! Check your email for confirmation.')
+        else:
+            flash('Account created! Please log in.')
+        
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
@@ -101,7 +146,7 @@ def logout():
 def feed():
     form = PostForm()
     if form.validate_on_submit():
-        new_post = Post(content=form.content.data)
+        new_post = Post(content=form.content.data, user_id=current_user.id)
         db.session.add(new_post)
         db.session.commit()
         flash('Post created!')
@@ -128,119 +173,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ user.username }}'s Profile</title>
-    <style>
-        body.default { background: #f0f0f0; }
-        body.dark { background: #222; color: #fff; }
-        body.blue { background: linear-gradient(to right, #2193b0, #6dd5ed); color: #fff; }
-        body.nature { background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed; background-size: cover; color: #fff; }
-        .profile-box { background: rgba(255,255,255,0.8); padding: 2em; margin: 2em auto; max-width: 400px; border-radius: 10px; }
-    </style>
-</head>
-<body class="{{ theme }}">
-    <div class="profile-box">
-        <h2>{{ user.username }}'s Profile</h2>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            {{ form.theme.label }} {{ form.theme() }}<br><br>
-            {{ form.submit() }}
-        </form>
-        <a href="{{ url_for('feed') }}">Back to Feed</a>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-    </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-    <style>
-        body {
-            background: linear-gradient(120deg, #000, #333);
-            min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .login-container {
-            background: rgba(255,255,255,0.95);
-            padding: 2em 2.5em;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
-            max-width: 350px;
-            margin: 80px auto;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 1.5em;
-            color: #222;
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 0.5em;
-            margin: 0.5em 0 1em 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 0.7em;
-            background: #222;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        input[type="submit"]:hover {
-            background: #444;
-        }
-        .signup-link {
-            text-align: center;
-            margin-top: 1em;
-        }
-        h1, label, .signup-link, ul, li {
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h1>Login Page</h1>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <label for="username">Username:</label>
-            {{ form.username(id="username") }}
-            <label for="password">Password:</label>
-            {{ form.password(id="password") }}
-            {{ form.submit() }}
-        </form>
-        <div class="signup-link">
-            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
-        </div>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-    </div>
-</body>
-</html>

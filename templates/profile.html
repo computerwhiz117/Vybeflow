@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user.username }}'s Profile - VybeFlow</title>
+    <style>
+        body.default { 
+            background: #f0f0f0; 
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body.dark { 
+            background: #222; 
+            color: #fff; 
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body.blue { 
+            background: linear-gradient(to right, #2193b0, #6dd5ed); 
+            color: #fff; 
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body.nature { 
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed; 
+            background-size: cover; 
+            color: #fff; 
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .profile-box { 
+            background: rgba(255,255,255,0.9); 
+            padding: 2em; 
+            margin: 2em auto; 
+            max-width: 400px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .profile-box h2 {
+            color: #222;
+            text-align: center;
+            margin-bottom: 1.5em;
+        }
+        .profile-box label {
+            font-weight: bold;
+            color: #222;
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        .profile-box select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .profile-box input[type="submit"] {
+            width: 100%;
+            padding: 0.7em;
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .profile-box input[type="submit"]:hover {
+            background: #444;
+        }
+        .profile-box a {
+            display: block;
+            text-align: center;
+            margin-top: 1em;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .profile-box a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            color: #27ae60;
+            padding-left: 1.5em;
+        }
+        li {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body class="{{ theme }}">
+    <div class="profile-box">
+        <h2>{{ user.username }}'s Profile</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.theme.label }}
+            {{ form.theme() }}
+            {{ form.submit() }}
+        </form>
+        <a href="{{ url_for('feed') }}">Back to Feed</a>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
