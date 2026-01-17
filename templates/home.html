@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ title or 'Welcome to VybeFlow' }}</h2>
+  <p class="muted">Connect and chat with your friends in this open platform</p>
+  <div class="card">
+    <p>Explore what's trending:</p>
+    <p>- Visit <a href="/discover">Discover</a></p>
+    <p>- View sample <a href="/feed">Feed</a> (requires login in demo)</p>
+  </div>
+  <p class="muted">Authentication routes are currently disabled in this setup.</p>
+{% endblock %}

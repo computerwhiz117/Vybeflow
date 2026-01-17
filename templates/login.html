@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Sign In</h2>
+  <form method="post" action="/auth/login" class="card">
+    <label>
+      <div class="muted">Username</div>
+      <input name="username" type="text" style="width:100%;padding:8px;margin-top:4px;background:#0f1216;color:#e6e9ef;border:1px solid #2a3038;border-radius:8px;" />
+    </label>
+    <label style="display:block;margin-top:10px;">
+      <div class="muted">Password</div>
+      <input name="password" type="password" style="width:100%;padding:8px;margin-top:4px;background:#0f1216;color:#e6e9ef;border:1px solid #2a3038;border-radius:8px;" />
+    </label>
+    <button type="submit" style="margin-top:12px;background:#2d7cf0;color:white;border:none;padding:8px 14px;border-radius:8px;">Login</button>
+  </form>
+{% endblock %}

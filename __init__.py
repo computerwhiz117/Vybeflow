@@ -15,23 +15,30 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     
     # Load configuration
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from config import config
+    try:
+        from .config import config
+    except ImportError:
+        from config import config
     app.config.from_object(config[config_name])
     
     # Initialize extensions with app
     db.init_app(app)
     migrate.init_app(app, db)
     
-    # Register blueprints
-    from .routes.main import main_bp
-    from .routes.auth import auth_bp
-    from .routes.messaging import messaging_bp
-    
+    # Register blueprints from available modules; fall back gracefully if optional ones are missing
+    from .main import main_bp
     app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(messaging_bp, url_prefix='/messaging')
+
+    try:
+        from .routes.auth import auth_bp
+        app.register_blueprint(auth_bp, url_prefix='/auth')
+    except ImportError:
+        app.logger.warning("auth blueprint not found; authentication routes are disabled")
+
+    try:
+        from .routes.messaging import messaging_bp
+        app.register_blueprint(messaging_bp, url_prefix='/messaging')
+    except ImportError:
+        app.logger.warning("messaging blueprint not found; messaging routes are disabled")
     
     return app

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Feed</h2>
+  {% if username %}
+    <p class="muted">Hello, {{ username }}.</p>
+  {% endif %}
+  {% if posts %}
+    {% for post in posts %}
+      <div class="card">
+        <div><strong>{{ post.username }}</strong> · <span class="muted">{{ post.type_display }}</span></div>
+        <div>{{ post.content }}</div>
+        {% if post.files %}
+          <div class="muted">Files: {{ post.files|join(', ') }}</div>
+        {% endif %}
+        <div class="muted">{{ post.time_ago }} · {{ post.likes }} likes · {{ post.comments }} comments</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No posts yet.</p>
+  {% endif %}
+{% endblock %}

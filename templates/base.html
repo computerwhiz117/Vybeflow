@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or 'VybeFlow' }}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #0f1216; color: #e6e9ef; }
+      header { background: #1b2027; padding: 12px 16px; border-bottom: 1px solid #2a3038; }
+      header h1 { margin: 0; font-size: 18px; }
+      main { padding: 16px; max-width: 900px; margin: 0 auto; }
+      a { color: #7cc4ff; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .card { background: #151a20; border: 1px solid #2a3038; border-radius: 10px; padding: 12px 14px; margin: 10px 0; }
+      .muted { color: #9aa4b2; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <h1 style="flex:0 0 auto;">VybeFlow</h1>
+        <nav style="flex:1 1 auto;">
+          <a href="/">Home</a>
+          <span class="muted">·</span>
+          <a href="/discover">Discover</a>
+          <span class="muted">·</span>
+          <a href="/login">Login</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>
