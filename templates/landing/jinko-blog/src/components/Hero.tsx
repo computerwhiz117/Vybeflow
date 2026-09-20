@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
               
               <div className="space-y-6">
                 <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold font-heading text-gray-900 leading-tight">
-                  Hey, I'm{' '}
+                  Welcome to{' '}
                   <span className="text-gradient">Vybeflow</span>
                 </h1>
                 
