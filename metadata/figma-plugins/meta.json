@@ -1,0 +1,14 @@
+{
+    "name": "Figma Plugins Landing Page",
+    "slogan": "We craft revolutionary Figma plugins",
+    "description": "A modern, vibrant landing page template inspired by ‹div›RIOTS for showcasing Figma plugins, design tools, or SaaS products. Features plugin categories, search functionality, stats display, and interactive elements with beautiful gradient designs.",
+    "images": ["figma-plugins/screenshot.png"],
+    "download_count": "0",
+    "tags": ["figma", "plugins", "design-tools", "saas", "marketplace", "gradients", "interactive", "showcase"],
+    "like_count": "0",
+    "view_count": "0",
+    "created": "2025-09-03",
+    "updated": "2025-09-03",
+    "tech_stack": ["React 19", "TypeScript", "TailwindCSS v4", "Vite", "Lucide React"],
+    "key_features": ["Plugin Showcase", "Search & Filter", "Stats Display", "Gradient Design", "Interactive Elements", "Category Organization", "Newsletter Signup", "Social Integration"]
+}
