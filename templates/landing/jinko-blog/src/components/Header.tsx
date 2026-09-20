@@ -33,7 +33,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <h1 className="text-xl sm:text-2xl font-bold font-heading text-gradient hover:scale-105 transition-transform duration-200 cursor-pointer">
-              jinkojinkojinko
+              Vybeflow
             </h1>
           </div>
 
@@ -43,13 +43,13 @@ const Header: React.FC = () => {
               Blog
             </a>
             <a href="#" className="text-sm font-medium text-gray-700 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200">
-              Lifestyle
+              Posts
             </a>
             <a href="#" className="text-sm font-medium text-gray-700 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200">
-              Beauty
+              Groups
             </a>
             <a href="#" className="text-sm font-medium text-gray-700 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200">
-              Travel
+              Add friends
             </a>
             <a href="#" className="text-sm font-medium text-gray-700 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200">
               About

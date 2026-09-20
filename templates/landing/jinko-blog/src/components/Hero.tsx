@@ -22,18 +22,17 @@ const Hero: React.FC = () => {
             <div className="text-center lg:text-left space-y-8">
               <div className="inline-flex items-center px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-3"></span>
-                <span className="text-sm text-gray-600">Currently writing about life & creativity</span>
+                <span className="text-sm text-gray-600">The social media site made for everyone, privacy respected.</span>
               </div>
               
               <div className="space-y-6">
                 <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold font-heading text-gray-900 leading-tight">
                   Hey, I'm{' '}
-                  <span className="text-gradient">Jinko</span>
+                  <span className="text-gradient">Vybeflow</span>
                 </h1>
                 
                 <p className="text-xl lg:text-2xl text-gray-600 max-w-3xl leading-relaxed">
-                  A creative soul sharing thoughts on lifestyle, beauty, and everything 
-                  in between. Welcome to my corner of the internet where words come alive.
+                  A social media platform that gives respect to the community.
                 </p>
               </div>
               
@@ -58,17 +57,17 @@ const Hero: React.FC = () => {
                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                   <blockquote className="text-center lg:text-left">
                     <p className="text-lg font-medium text-gray-900 mb-2">
-                      "Blunt pencils are really pointless"
+                      "View your posts and engage with the community"
                     </p>
                     <p className="text-sm text-gray-600">
-                      — Daily dose of Jinko wisdom
+                      — Join the community
                     </p>
                   </blockquote>
                 </div>
                 
                 <div className="bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl p-6 text-white">
                   <div className="text-center lg:text-left">
-                    <h3 className="text-lg font-semibold mb-2">Latest Article</h3>
+                    <h3 className="text-lg font-semibold mb-2">Latest Post</h3>
                     <p className="text-primary-100 text-sm mb-3">
                       "Style begin mr heard by in music tried do"
                     </p>
@@ -83,11 +82,11 @@ const Hero: React.FC = () => {
               <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-2">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary-600">127</div>
-                  <div className="text-sm text-gray-600">Articles</div>
+                  <div className="text-sm text-gray-600">Posts</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-accent-600">12.5K</div>
-                  <div className="text-sm text-gray-600">Readers</div>
+                  <div className="text-sm text-gray-600">Groups</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-600">89</div>
@@ -109,12 +108,7 @@ const Hero: React.FC = () => {
                 <div className="w-32 h-32 bg-gradient-to-br from-primary-400 to-accent-400 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
                   <span className="text-white text-3xl font-bold">J</span>
                 </div>
-                <h3 className="font-heading text-2xl font-semibold text-gray-900 mb-3">
-                  Follow me
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Follow me on my socials
-                </p>
+      
                 <div className="flex justify-center space-x-3">
                   {socialLinks.map((social) => (
                     <a
@@ -132,10 +126,10 @@ const Hero: React.FC = () => {
               <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-semibold mb-3">
-                    Never trust atoms; they make up everything
+                    Explore and make friends in the community
                   </h3>
                   <p className="text-gray-300">
-                    Join 12.5K+ readers getting weekly insights about creativity, life, and everything in between.
+                    Join 12.5K+ members getting weekly updates about community activities, events, and discussions.
                   </p>
                 </div>
                 
@@ -146,10 +140,10 @@ const Hero: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
                   />
                   <button className="w-full bg-gradient-to-r from-primary-500 to-accent-500 hover:from-primary-600 hover:to-accent-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg">
-                    Subscribe
+                    Sign up
                   </button>
                   <p className="text-xs text-gray-400 text-center">
-                    No spam, unsubscribe anytime
+                    Make your account today
                   </p>
                 </div>
               </div>
